@@ -13,29 +13,25 @@ body {
     background-color: #1a1a1a;
 }
 
-/* --- CAPAS DEL MOTOR 3D --- */
+/* --- CAPAS PRINCIPALES --- */
 #webgl-container {
-    position: absolute;
+    position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1;
-    pointer-events: none; /* Deja pasar clicks al CSS3D */
 }
 
 #css3d-container {
-    position: absolute;
+    position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 2;
-    pointer-events: auto; /* IMPORTANTE: Permite interacción */
 }
 
-/* --- INTERFAZ FLOTANTE --- */
+/* --- UI FLOTANTE (SIEMPRE ARRIBA) --- */
 #ui-layer {
-    position: absolute;
-    z-index: 10;
-    top: 0; left: 0; width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
     pointer-events: none;
 }
 
@@ -63,7 +59,7 @@ body {
 }
 
 .btn-exit {
-    position: absolute;
+    position: fixed;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
@@ -80,6 +76,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1001;
 }
 
 .btn-exit.visible {
@@ -93,9 +90,12 @@ body {
     transform: translateX(-50%) scale(1.05);
 }
 
-/* --- PANTALLAS --- */
+/* --- ELEMENTOS 3D --- */
 #monitor-wrapper, #ipad-wrapper {
-    position: relative;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    pointer-events: auto;
 }
 
 .click-blocker {
@@ -103,7 +103,7 @@ body {
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(59, 130, 246, 0);
     cursor: pointer;
-    z-index: 20;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +132,7 @@ body {
     transform: scale(1);
 }
 
-/* --- DISEÑO DE LA PANTALLA MONITOR --- */
+/* --- DISEÑO DE PANTALLAS --- */
 .screen-content {
     width: 1280px;  
     height: 720px;
@@ -141,9 +141,11 @@ body {
     padding: 50px;
     overflow-y: auto;
     box-shadow: inset 0 0 80px rgba(0,0,0,0.05);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: auto;
 }
 
-/* Scrollbar estilizado */
 .screen-content::-webkit-scrollbar { width: 8px; }
 .screen-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
 
@@ -203,13 +205,17 @@ p { line-height: 1.6; color: #334155; font-size: 1.1rem; }
 }
 .btn-primary:hover { background: #1e293b; }
 
-/* --- DISEÑO DE LA PANTALLA IPAD --- */
+/* IPAD */
 .ipad-theme {
     width: 768px;
     height: 1024px;
     background: #111;
     color: white;
     padding: 40px;
+    border-radius: 110px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .ipad-theme h2 { color: white; text-align: center; font-size: 2rem; margin-bottom: 30px; border-bottom: none; }
@@ -246,3 +252,139 @@ p { line-height: 1.6; color: #334155; font-size: 1.1rem; }
 
 .project-card h3 { font-size: 1.1rem; margin-bottom: 5px; color: white; }
 .project-card p { font-size: 0.9rem; color: #999; }
+
+/* AÑADE ESTO AL FINAL DE TU STYLES.CSS */
+
+/* GARANTIZAR QUE WEBGL RECIBA EVENTOS */
+#webgl-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: auto !important; /* ✅ FORZAR EVENTOS */
+}
+
+#css3d-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none !important; /* ✅ NO BLOQUEA EVENTOS */
+}
+
+/* LOS ELEMENTOS CSS3D INDIVIDUALES */
+.css3d-object {
+    pointer-events: none !important; /* ✅ El contenedor no bloquea */
+}
+
+.click-blocker {
+    pointer-events: auto !important; /* ✅ Solo el blocker es clickeable */
+}
+
+.screen-content {
+    pointer-events: auto !important; /* ✅ El contenido es interactivo */
+}
+
+/* FOOTER LATERAL DE NAVEGACIÓN */
+#side-footer {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 0 20px 20px 0;
+    padding: 20px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 12px 8px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    pointer-events: auto;
+}
+
+.nav-item:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateX(5px);
+}
+
+.nav-item.active {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover .nav-icon {
+    transform: scale(1.2);
+}
+
+.nav-text {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+/* Tooltip para hover */
+.nav-item::after {
+    content: attr(data-target);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.nav-item:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(15px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #side-footer {
+        padding: 15px 10px;
+    }
+    
+    .nav-text {
+        font-size: 0.7rem;
+    }
+    
+    .nav-item::after {
+        display: none;
+    }
+}

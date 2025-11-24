@@ -6,7 +6,6 @@
     <title>Portfolio 3D - Senior Dev</title>
     <link rel="stylesheet" href="styles.css">
     
-    <!-- IMPORT MAP: Versiones compatibles garantizadas -->
     <script type="importmap">
         {
             "imports": {
@@ -19,7 +18,11 @@
 </head>
 <body>
 
-    <!-- UI FLOTANTE -->
+    <!-- CAPA 3D PRINCIPAL (INTERACTIVA) -->
+    <div id="webgl-container"></div>
+    <div id="css3d-container"></div>
+
+    <!-- UI FLOTANTE (ENCIMA DE TODO) -->
     <div id="ui-layer">
         <div class="controls">
             <button id="btn-theme" class="btn">🌙 Modo Noche</button>
@@ -28,52 +31,70 @@
         <button id="btn-exit" class="btn-exit">❌ SALIR DE VISTA</button>
     </div>
 
-    <!-- CONTENIDO DEL MONITOR (CV) -->
-    <div id="monitor-wrapper">
-        <div id="monitor-blocker" class="click-blocker"><span>🔍 Click para ver CV</span></div>
-        <div id="monitor-content" class="screen-content">
-            <header>
-                <div class="avatar">👨‍💻</div> 
-                <h1>TU NOMBRE</h1>
-                <p class="subtitle">Creative Developer & 3D Artist</p>
-            </header>
-            
-            <div class="scroll-area">
-                <section>
-                    <h2>Sobre mí</h2>
-                    <p>Soy un desarrollador apasionado por crear experiencias inmersivas. Domino JavaScript, React y ahora Three.js.</p>
-                </section>
-                <section>
-                    <h2>Stack Tecnológico</h2>
-                    <div class="tags">
-                        <span>JavaScript</span><span>React</span><span>Three.js</span><span>Blender</span><span>Node.js</span>
-                    </div>
-                </section>
-                <section>
-                    <h2>Contacto</h2>
-                    <button class="btn-primary">Enviar Correo</button>
-                </section>
+    <!-- FOOTER LATERAL DE NAVEGACIÓN -->
+    <footer id="side-footer">
+        <div class="nav-items">
+            <div class="nav-item" data-target="about">
+                <div class="nav-icon">👤</div>
+                <span class="nav-text">Sobre mí</span>
+            </div>
+            <div class="nav-item" data-target="skills">
+                <div class="nav-icon">💻</div>
+                <span class="nav-text">Habilidades</span>
+            </div>
+            <div class="nav-item" data-target="projects">
+                <div class="nav-icon">🚀</div>
+                <span class="nav-text">Proyectos</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CONTENIDO HTML PARA 3D (OCULTO INICIALMENTE) -->
+    <div id="html-elements" style="display: none;">
+        <!-- MONITOR -->
+        <div id="monitor-wrapper">
+            <div id="monitor-blocker" class="click-blocker"><span>🔍 Click para ver CV</span></div>
+            <div id="monitor-content" class="screen-content">
+                <header>
+                    <div class="avatar">👨‍💻</div> 
+                    <h1>TU NOMBRE</h1>
+                    <p class="subtitle">Creative Developer & 3D Artist</p>
+                </header>
+                
+                <div class="scroll-area">
+                    <section id="about-section">
+                        <h2>Sobre mí</h2>
+                        <p>Soy un desarrollador apasionado por crear experiencias inmersivas. Domino JavaScript, React y ahora Three.js. Me encanta combinar diseño y código para crear interfaces extraordinarias.</p>
+                    </section>
+                    <section id="skills-section">
+                        <h2>Stack Tecnológico</h2>
+                        <div class="tags">
+                            <span>JavaScript</span><span>React</span><span>Three.js</span><span>Blender</span><span>Node.js</span>
+                            <span>HTML5</span><span>CSS3</span><span>Git</span><span>Figma</span><span>WebGL</span>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Contacto</h2>
+                        <button class="btn-primary">Enviar Correo</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- IPAD -->
+        <div id="ipad-wrapper">
+            <div id="ipad-blocker" class="click-blocker"><span>👆 Ver Proyectos</span></div>
+            <div id="ipad-content" class="screen-content ipad-theme">
+                <h2>PORTFOLIO</h2>
+                <div class="project-grid">
+                    <div class="project-card"><div class="thumb" style="background:#ff9a9e;"></div><h3>E-Commerce</h3><p>Tienda online con React</p></div>
+                    <div class="project-card"><div class="thumb" style="background:#a18cd1;"></div><h3>Dashboard</h3><p>Panel de analytics</p></div>
+                    <div class="project-card"><div class="thumb" style="background:#84fab0;"></div><h3>Banco App</h3><p>Aplicación financiera</p></div>
+                    <div class="project-card"><div class="thumb" style="background:#fccb90;"></div><h3>Social</h3><p>Red social moderna</p></div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- CONTENIDO DEL IPAD (Proyectos) -->
-    <div id="ipad-wrapper">
-        <div id="ipad-blocker" class="click-blocker"><span>👆 Ver Proyectos</span></div>
-        <div id="ipad-content" class="screen-content ipad-theme">
-            <h2>PORTFOLIO</h2>
-            <div class="project-grid">
-                <div class="project-card"><div class="thumb" style="background:#ff9a9e;"></div><h3>E-Commerce</h3></div>
-                <div class="project-card"><div class="thumb" style="background:#a18cd1;"></div><h3>Dashboard</h3></div>
-                <div class="project-card"><div class="thumb" style="background:#84fab0;"></div><h3>Banco App</h3></div>
-                <div class="project-card"><div class="thumb" style="background:#fccb90;"></div><h3>Social</h3></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RENDERERS -->
-    <div id="webgl-container"></div>
-    <div id="css3d-container"></div>
 
     <script type="module" src="scripts.js"></script>
 </body>
