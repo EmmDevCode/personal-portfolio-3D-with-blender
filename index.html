@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio 3D - Senior Dev</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- IMPORT MAP: Versiones compatibles garantizadas -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+                "@tweenjs/tween.js": "https://unpkg.com/@tweenjs/tween.js@23.1.1/dist/tween.esm.js"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <!-- UI FLOTANTE -->
+    <div id="ui-layer">
+        <div class="controls">
+            <button id="btn-theme" class="btn">🌙 Modo Noche</button>
+            <button id="btn-reset" class="btn">Reset Cámara</button>
+        </div>
+        <button id="btn-exit" class="btn-exit">❌ SALIR DE VISTA</button>
+    </div>
+
+    <!-- CONTENIDO DEL MONITOR (CV) -->
+    <div id="monitor-wrapper">
+        <div id="monitor-blocker" class="click-blocker"><span>🔍 Click para ver CV</span></div>
+        <div id="monitor-content" class="screen-content">
+            <header>
+                <div class="avatar">👨‍💻</div> 
+                <h1>TU NOMBRE</h1>
+                <p class="subtitle">Creative Developer & 3D Artist</p>
+            </header>
+            
+            <div class="scroll-area">
+                <section>
+                    <h2>Sobre mí</h2>
+                    <p>Soy un desarrollador apasionado por crear experiencias inmersivas. Domino JavaScript, React y ahora Three.js.</p>
+                </section>
+                <section>
+                    <h2>Stack Tecnológico</h2>
+                    <div class="tags">
+                        <span>JavaScript</span><span>React</span><span>Three.js</span><span>Blender</span><span>Node.js</span>
+                    </div>
+                </section>
+                <section>
+                    <h2>Contacto</h2>
+                    <button class="btn-primary">Enviar Correo</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO DEL IPAD (Proyectos) -->
+    <div id="ipad-wrapper">
+        <div id="ipad-blocker" class="click-blocker"><span>👆 Ver Proyectos</span></div>
+        <div id="ipad-content" class="screen-content ipad-theme">
+            <h2>PORTFOLIO</h2>
+            <div class="project-grid">
+                <div class="project-card"><div class="thumb" style="background:#ff9a9e;"></div><h3>E-Commerce</h3></div>
+                <div class="project-card"><div class="thumb" style="background:#a18cd1;"></div><h3>Dashboard</h3></div>
+                <div class="project-card"><div class="thumb" style="background:#84fab0;"></div><h3>Banco App</h3></div>
+                <div class="project-card"><div class="thumb" style="background:#fccb90;"></div><h3>Social</h3></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RENDERERS -->
+    <div id="webgl-container"></div>
+    <div id="css3d-container"></div>
+
+    <script type="module" src="scripts.js"></script>
+</body>
+</html>

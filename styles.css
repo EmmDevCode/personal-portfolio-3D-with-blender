@@ -1,0 +1,248 @@
+:root {
+    --primary: #3b82f6;
+    --monitor-bg: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #1a1a1a;
+}
+
+/* --- CAPAS DEL MOTOR 3D --- */
+#webgl-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Deja pasar clicks al CSS3D */
+}
+
+#css3d-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: auto; /* IMPORTANTE: Permite interacción */
+}
+
+/* --- INTERFAZ FLOTANTE --- */
+#ui-layer {
+    position: absolute;
+    z-index: 10;
+    top: 0; left: 0; width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.controls {
+    pointer-events: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-exit {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #ef4444;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-exit.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.btn-exit:hover {
+    background: #dc2626;
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* --- PANTALLAS --- */
+#monitor-wrapper, #ipad-wrapper {
+    position: relative;
+}
+
+.click-blocker {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(59, 130, 246, 0);
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.click-blocker:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.click-blocker span {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.click-blocker:hover span {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* --- DISEÑO DE LA PANTALLA MONITOR --- */
+.screen-content {
+    width: 1280px;  
+    height: 720px;
+    background: var(--monitor-bg);
+    color: var(--text-main);
+    padding: 50px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 80px rgba(0,0,0,0.05);
+}
+
+/* Scrollbar estilizado */
+.screen-content::-webkit-scrollbar { width: 8px; }
+.screen-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.avatar {
+    width: 100px; height: 100px;
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 3rem;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
+.subtitle { color: var(--text-muted); font-size: 1.25rem; font-weight: 400; }
+
+section { margin-bottom: 40px; }
+h2 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+}
+
+p { line-height: 1.6; color: #334155; font-size: 1.1rem; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tags span {
+    background: #eff6ff;
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid #dbeafe;
+}
+
+.btn-primary {
+    display: block; width: 100%;
+    padding: 16px;
+    background: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-primary:hover { background: #1e293b; }
+
+/* --- DISEÑO DE LA PANTALLA IPAD --- */
+.ipad-theme {
+    width: 768px;
+    height: 1024px;
+    background: #111;
+    color: white;
+    padding: 40px;
+}
+
+.ipad-theme h2 { color: white; text-align: center; font-size: 2rem; margin-bottom: 30px; border-bottom: none; }
+
+.project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.project-card {
+    background: #222;
+    border-radius: 16px;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    border: 1px solid #333;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    background: #2a2a2a;
+    border-color: #444;
+}
+
+.thumb {
+    height: 140px;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background-size: cover;
+    background-position: center;
+}
+
+.project-card h3 { font-size: 1.1rem; margin-bottom: 5px; color: white; }
+.project-card p { font-size: 0.9rem; color: #999; }
