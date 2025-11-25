@@ -128,7 +128,7 @@ function setupElementInteractions(cssObject, child) {
 // 8. CARGAR MODELO
 const loader = new GLTFLoader();
 
-loader.load('assets/Portafolio.glb', (gltf) => {
+loader.load('assets/Portafolio2.glb', (gltf) => {
     console.log("Modelo cargado correctamente");
     const model = gltf.scene;
     
